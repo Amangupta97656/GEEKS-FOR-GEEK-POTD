@@ -1,29 +1,29 @@
 class Solution {
     public ArrayList<Integer> maxOfSubarrays(int[] arr, int k) {
-        return f(arr,k);
-    }
-    
-    ArrayList<Integer> f(int[] arr,int k){
-        Deque<Integer> dq=new ArrayDeque<>();
-        ArrayList<Integer> ans=new ArrayList<>();
-        int i=0;
-        for(i=0;i<k;i++){
-            while(dq.size()>0 &&dq.peekLast()<arr[i]) dq.removeLast();
-            dq.addLast(arr[i]);
+        // code here
+        ArrayList<Integer> result = new ArrayList<>();
+        Deque<Integer> dq = new ArrayDeque<>();
+
+        for (int i = 0; i < arr.length; i++) {
+
+            // Remove elements out of window
+            while (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+
+            // Remove smaller elements
+            while (!dq.isEmpty() && arr[dq.peekLast()] <= arr[i]) {
+                dq.pollLast();
+            }
+
+            dq.offerLast(i);
+
+            // Add max for current window
+            if (i >= k - 1) {
+                result.add(arr[dq.peekFirst()]);
+            }
         }
+        return result;
         
-        ans.add(dq.peekFirst());
-        
-       for(;i<arr.length;i++){
-           while(dq.size()>0 && dq.peekFirst()<arr[i-k]) dq.removeFirst();
-           if(dq.size()>0 && dq.peekFirst()==arr[i-k]) dq.removeFirst();
-           
-            while(dq.size()>0 && dq.peekLast()<arr[i]) dq.removeLast();
-            dq.addLast(arr[i]);
-            
-             ans.add(dq.peekFirst());
-            
-       }
-       return ans;
     }
 }
