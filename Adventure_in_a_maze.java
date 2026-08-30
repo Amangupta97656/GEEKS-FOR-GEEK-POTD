@@ -1,3 +1,4 @@
+
 class Solution {
     public ArrayList<Integer> findWays(int[][] grid) {
         // Code here
