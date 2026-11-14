@@ -1,5 +1,4 @@
 
-
 class Solution {
     public Node rev(Node head){
         Node prev = null;
